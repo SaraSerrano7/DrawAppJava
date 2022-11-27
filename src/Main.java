@@ -3,10 +3,8 @@ import acm.program.GraphicsProgram;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Scanner;
 
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
@@ -34,7 +32,6 @@ public class Main extends GraphicsProgram {
     }
 
     public static void main(String[] args) {
-
         String shapeWanted = getInput("shape", t("SELECT_SHAPE"));
         String colorWanted = getInput("color", t(("SELECT_COLOR")));
         String sizeWanted = getInput("size", t(("SELECT_SIZE")));
@@ -78,14 +75,6 @@ public class Main extends GraphicsProgram {
         } else {
             return new GLine(1.0, 1.0, 2.0, 2.0);
         }
-        /*
-        return switch (shapeWanted) {
-            case t("square") -> new GRect(5.0, 5.0);
-            case t("circle") -> new GOval(5.0, 5.0);
-            default -> new GLine(1.0, 1.0, 2.0, 2.0);
-        };
-        */
-         
     }
 
     private static GObject paintFigure(String colorWanted, GObject figure) {
@@ -99,15 +88,6 @@ public class Main extends GraphicsProgram {
         }
         
         return figure;
-        /*
-        switch (colorWanted) {
-            case "red" -> figure.setColor(Color.RED);
-            case "green" -> figure.setColor(Color.GREEN);
-            default -> figure.setColor(Color.BLUE);
-        }
-        return figure;
-        
-         */
     }
     private static GObject resizeFigure(GObject figure, String sizeWanted) {
         if(figure instanceof GLine) {
@@ -132,23 +112,6 @@ public class Main extends GraphicsProgram {
             circle.setSize(150.0, 150.0);
             return circle;
         }
-        /*
-        switch (sizeWanted) {
-            case "little" -> {
-                circle.setSize(50.0, 50.0);
-                return circle;
-            }
-            case "medium" -> {
-                circle.setSize(100.0, 100.0);
-                return circle;
-            }
-            default -> {
-                circle.setSize(150.0, 150.0);
-                return circle;
-            }
-        }
-        
-         */
     }
 
     private static GObject resizeSquare(GRect square, String sizeWanted) {
@@ -163,23 +126,6 @@ public class Main extends GraphicsProgram {
             square.setSize(150.0, 150.0);
             return square;
         }
-        /*
-        switch (sizeWanted) {
-            case "little" -> {
-                square.setSize(50.0, 50.0);
-                return square;
-            }
-            case "medium" -> {
-                square.setSize(100.0, 100.0);
-                return square;
-            }
-            default -> {
-                square.setSize(150.0, 150.0);
-                return square;
-            }
-        }
-        
-         */
     }
 
     private static GObject resizeLine(GLine line, String sizeWanted) {
@@ -194,23 +140,6 @@ public class Main extends GraphicsProgram {
             line.setEndPoint(150.0, 150.0);
             return line;
         }
-/*
-        switch (sizeWanted) {
-            case "little" -> {
-                line.setEndPoint(50.0, 50.0);
-                return line;
-            }
-            case "medium" -> {
-                line.setEndPoint(100.0, 100.0);
-                return line;
-            }
-            default -> {
-                line.setEndPoint(150.0, 150.0);
-                return line;
-            }
-        }
-
- */
     }
 
     public static void setup(GObject resizedFigure) {
