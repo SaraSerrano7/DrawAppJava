@@ -9,6 +9,9 @@ import java.util.List;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class Main extends GraphicsProgram {
+    /**
+     * Java class to ask the user to draw a figure and show it.
+     */
 
     static GCanvas canvas;
     static JFrame myProgram = new JFrame();
@@ -27,10 +30,22 @@ public class Main extends GraphicsProgram {
     static final ArrayList<String> SIZES = new ArrayList<>(
             List.of(t(("little")), t(("medium")), t(("big")))
     );
+
+    /**
+     * Method to do the translations of the hardcoded Strings.
+     *
+     * @param message String to translate
+     * @return internationalization of the String message.
+     */
     private static String t(String message) {
         return i18n.getString(message);
     }
 
+    /**
+     * Program to ask how the user wants to draw a shape and then the figure is shown.
+     * Here, the strings "mode" for getInput() are not internationalized because they are not printed nor scanned.
+     * @param args Command line arguments
+     */
     public static void main(String[] args) {
         String shapeWanted = getInput("shape", t("SELECT_SHAPE"));
         String colorWanted = getInput("color", t(("SELECT_COLOR")));
@@ -38,6 +53,13 @@ public class Main extends GraphicsProgram {
         draw(shapeWanted, colorWanted, sizeWanted);
     }
 
+    /**
+     * Method to get either the shape, color or size desired by the user from the keyboard input.
+     * In case it is misspelled, we ask the user to input the answer again.
+     * @param mode String that indicates which question we are getting the answer to
+     * @param message String containing the question we want to ask
+     * @return String input received from the user.
+     */
     private static String getInput(String mode, String message) {
         Scanner sc = new Scanner(System.in);
         System.out.println(message);
@@ -50,6 +72,12 @@ public class Main extends GraphicsProgram {
         return inputReceived;
     }
 
+    /**
+     * Method that checks if the input received by user is in a correct format or not.
+     * @param mode String that indicates which is the question.
+     * @param inputReceived String that indicates what is the user's answer
+     * @return Boolean indicating the correctness of the user's answer.
+     */
     private static boolean checkInputReceived(String mode, String inputReceived) {
         return switch (mode) {
             case "shape" -> !SHAPES.contains(inputReceived);
@@ -58,6 +86,12 @@ public class Main extends GraphicsProgram {
         };
     }
 
+    /**
+     * Method to draw, color and resize the figure desired by the user and setting up the canvas needed.
+     * @param shapeWanted String that contains which is the shape desired by user.
+     * @param colorWanted String that contains which is the color desired by user.
+     * @param sizeWanted String that contains which is the size desired by user.
+     */
     private static void draw(String shapeWanted, String colorWanted, String sizeWanted) {
         GObject figure = drawShape(shapeWanted);
         GObject paintedFigure = paintFigure(colorWanted, figure);
@@ -66,6 +100,11 @@ public class Main extends GraphicsProgram {
     }
 
 
+    /**
+     * Method to draw the shape.
+     * @param shapeWanted String that indicates the shape desired by user.
+     * @return a GObject that depending on shapeWanted content, can be a line, square or circle.
+     */
     private static GObject drawShape(String shapeWanted) {
         
         if(shapeWanted.equals(t("square"))) {
@@ -77,6 +116,12 @@ public class Main extends GraphicsProgram {
         }
     }
 
+    /**
+     * Method to paint the figure drawn for the user.
+     * @param colorWanted String that indicates which is the color for the figure.
+     * @param figure The GObject that will be drawn and shown in the canvas, ready to be colored.
+     * @return The GObject painted with the desired color.
+     */
     private static GObject paintFigure(String colorWanted, GObject figure) {
         
         if(colorWanted.equals(t("red"))) {
@@ -89,6 +134,13 @@ public class Main extends GraphicsProgram {
         
         return figure;
     }
+
+    /**
+     * Method to change the size of the figure drawn for the user, depending on the type of figure we are dealing with.
+     * @param figure GObject that is about to be resized.
+     * @param sizeWanted String containing the size the figure will be.
+     * @return GObject as the resized figure.
+     */
     private static GObject resizeFigure(GObject figure, String sizeWanted) {
         if(figure instanceof GLine) {
             return resizeLine((GLine) figure, sizeWanted);
@@ -100,6 +152,12 @@ public class Main extends GraphicsProgram {
     }
 
 
+    /**
+     * Method to change the size of a circle.
+     * @param circle GOval object as the figure desired by the user to be drawn and displayed.
+     * @param sizeWanted String that indicates which will the size of the figure be.
+     * @return The circle resized and treated with an uppercast.
+     */
     private static GObject resizeCircle(GOval circle, String sizeWanted) {
         
         if(sizeWanted.equals(t("little"))) {
@@ -114,6 +172,12 @@ public class Main extends GraphicsProgram {
         }
     }
 
+    /**
+     * Method to change the size of a square.
+     * @param square GOval object as the figure desired by the user to be drawn and displayed.
+     * @param sizeWanted String that indicates which will the size of the figure be.
+     * @return The square resized and treated with an uppercast.
+     */
     private static GObject resizeSquare(GRect square, String sizeWanted) {
 
         if(sizeWanted.equals(t("little"))) {
@@ -128,6 +192,12 @@ public class Main extends GraphicsProgram {
         }
     }
 
+    /**
+     * Method to change the size of a line.
+     * @param line GOval object as the figure desired by the user to be drawn and displayed.
+     * @param sizeWanted String that indicates which will the size of the figure be.
+     * @return The line resized and treated with an uppercast.
+     */
     private static GObject resizeLine(GLine line, String sizeWanted) {
         
         if(sizeWanted.equals(t("little"))) {
@@ -142,6 +212,10 @@ public class Main extends GraphicsProgram {
         }
     }
 
+    /**
+     * Method to set up and configure the canvas where the figure will be displayed.
+     * @param resizedFigure GObject as the figure to be displayed.
+     */
     public static void setup(GObject resizedFigure) {
         myProgram.setDefaultCloseOperation(EXIT_ON_CLOSE);
         myProgram.setVisible(true);
